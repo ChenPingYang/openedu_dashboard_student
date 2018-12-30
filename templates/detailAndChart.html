@@ -1,0 +1,1721 @@
+﻿<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="Content-Type" content="text/html;">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<title>中華開放教育平台</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="{% static './vendor/datatables-plugins/dataTables.bootstrap.css' %}"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static './vendor/datatables-responsive/dataTables.responsive.css' %}"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static './vendor/font-awesome/css/font-awesome.min.css' %}"
+	rel="stylesheet" type="text/css">
+
+<!-- export -->
+<link rel="stylesheet"
+	href="https://www.amcharts.com/lib/3/plugins/export/export.css"
+	type="text/css" media="all" />
+
+<!-- slick(推薦系統使用) -->
+<link rel="stylesheet" type="text/css" href="./slick/slick.css">
+<link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNInG: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<style>
+#chartdiv1 {
+	width: 100%;
+	height: 300px;
+}
+</style>
+
+<style>
+.box {
+	width: 30%;
+	float: left;
+}
+
+.zone {
+	width: 100%;
+	height: 100%;
+}
+</style>
+
+<style>
+#chartdivdonut {
+	width: 100%;
+	height: 200px;
+}
+</style>
+
+
+<style>
+#chartdiv29 {
+	width: 100%;
+	height: 600px;
+}
+</style>
+
+<style>
+img {
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+</style>
+
+<style type="text/css">
+.resize {
+	width: auto;
+	width: 200px;
+}
+
+.resize {
+	height: auto;
+	height: 200px;
+}
+</style>
+
+  <style type="text/css">
+  
+    * {
+      box-sizing: border-box;
+    }
+
+    .slider {
+        width: 50%;
+        margin: 100px auto;
+    }
+
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      color: black;
+    }
+
+
+    .slick-slide {
+      transition: all ease-in-out .3s;
+      opacity: .2;
+    }
+    
+    .slick-active {
+      opacity: .5;
+    }
+
+    .slick-current {
+      opacity: 1;
+    }
+  </style>
+
+<body>
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		{% include 'sidebar_student.html' %}
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-md-10">
+					<h1 class="page-header">{{courseName}}</h1>
+
+				</div>
+
+			</div>
+			
+			
+
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">修課資料</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-5">
+									<div id="images"></div>
+								</div>
+								<div class="col-lg-7">
+									<table style="width: 100%" class="table table-hover">
+										<thead>
+											<tr>
+												<th width="30%">觀看次數</th>
+												<th width="30%">觀看影片數</th>
+												<th width="30%">討論區發文數</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><a data-toggle="modal" data-target="#myModalwatch"
+													style="cursor: pointer">{{studentwatch_count}}</a></td>
+												<td><a data-toggle="modal" data-target="#myModalvideo"
+													style="cursor: pointer">{{studentvideo_count}}</a></td>
+												<td><a data-toggle="modal" data-target="#myModalforum"
+													style="cursor: pointer">{{studentforum_num}}</a></td>
+											</tr>
+										</tbody>
+									</table>
+									<table style="width: 100%" class="table table-hover">
+										<thead>
+											<tr>
+												<th width="30%">問答題完成率</th>
+												<th width="30%">問答題答對率</th>
+												<th width="30%">題目成績</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+
+												<td><a data-toggle="modal"
+													data-target="#myModalcomplete" style="cursor: pointer">{{studentcomplete_rate}}</a></td>
+												<td><a data-toggle="modal"
+													data-target="#myModalc_complete" style="cursor: pointer">{{studentc_complete_rate}}</a></td>
+												<td><a data-toggle="modal" data-target="#myModalgrade"
+													style="cursor: pointer">{{studentgrade}}</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<div class="col-lg-4">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<font color="blue" size="3"><span
+								style="font-weight: bold;">目前完成 {{chapterfinishcount}} 單元
+									{% with chapterfinishcount|add:-1 as temp %}
+									{{encourage.temp}}</span></font>
+									{% endwith %}
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div id=chartdivdonut></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">修課雷達圖</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-5">
+									<div id="chartdiv1"></div>
+								</div>
+								<div class="col-lg-7">
+									<table style="width: 100%" class="table table-hover">
+										<thead>
+											<tr>
+												<th>資料名</th>
+												<th>學生最高</th>
+												<th>平均學生真實數值</th>
+												<th>本課程個人真實數值</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for testList in RadarDara %}
+												<tr>
+													<td>{{testList.0 }}</td>
+													<td>{{testList.1 }}</td>
+													<td>{{testList.3 }}</td>
+													<td>{{testList.4 }}</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+									<label>去極端值做法採用 Hampel identifier，平均資料是使用去極端值後產生出來的</label>
+								</div>
+							</div>
+						</div>
+						<!-- 						<div class="panel-body"> -->
+						<!-- 							<div id="chartdiv1"></div> -->
+						<!-- 							/.table-responsive -->
+						<!-- 						</div> -->
+						<!-- /.panel-body -->
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">修課折線圖</div>
+						<div class="row">
+							<div class="panel-body">
+								<div id="Div1"></div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 			<div class="row"> -->
+			<!-- 				<div class="col-lg-12"> -->
+			<!-- 					<div class="panel panel-primary"> -->
+			<!-- 						<div class="panel-heading">修課雷達圖</div> -->
+			<!-- 						/.panel-heading -->
+			<!-- 						<div class="panel-body"> -->
+			<!-- 							<div class="row"> -->
+			<!-- 								<div class="col-lg-5"> -->
+			<!-- 									<div id="chart-area"></div> -->
+			<!-- 								</div> -->
+			<!-- 							</div> -->
+			<!-- 						</div> -->
+			<!-- 						<div class="panel-body"> -->
+			<!-- 							<div id="chart-area"></div> -->
+			<!-- 							/.table-responsive -->
+			<!-- 						</div> -->
+			<!-- 						/.panel-body -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+
+			<!-- 			</div> -->
+
+			<!-- 			<div class="col-lg-5"> -->
+			<!-- 				<div class="panel panel-primary"> -->
+			<%-- 					<canvas id="season" style="width: 5%; height: 5%;"></canvas> --%>
+			<!-- 				</div> -->
+			<!-- 			</div> -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								已觀看的課程 <i data-toggle="tooltip" data-placement="top" title=""
+									data-track-event="edx.bi.tooltip.displayed"
+									class="ico ico-tooltip fa fa-info-circle has-tooltip"
+									data-original-title="影片問答題答對率(答對數/總題數)超過50%的人數與比例"></i>
+							</h3>
+						</div>
+						<div id="table_div" style="width: 95%; height: 100%;"></div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">課程勳章</div>
+						<!-- body -->
+						<div class="panel-body"
+							style="width: 100%; height: 100%; border: 1px #ccc solid;">
+
+							<!-- 2017.11.8_新增&修改(始) -->
+							<!-- 登入次數 -->
+							<div class="row">
+								<div class="col-lg-2" style="padding-left: 35px">
+									<div id="login1" data-trigger="hover" data-placement="bottom"
+										data-original-title="登入一次" data-html="true"
+										data-content="{{login_1_GetOrNot}}">
+										<!-- data-html="true" 用<br>即可換行 -->
+										<img src="{% static login_1_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{login_1_Percentage}}%; color: black">{{login_1_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="login2" data-trigger="hover" data-placement="bottom"
+										data-original-title="登入五次" data-html="true"
+										data-content="{{login_5_GetOrNot}}">
+										<img src="{% static login_5_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{login_5_Percentage}}%; color: black">{{login_5_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="login3" data-trigger="hover" data-placement="bottom"
+										data-original-title="登入十次" data-html="true"
+										data-content="{{login_10_GetOrNot}}">
+										<img src="{% static login_10_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{login_10_Percentage}}%; color: black">{{login_10_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="login4" data-trigger="hover" data-placement="bottom"
+										data-original-title="登入二十次" data-html="true"
+										data-content="{{login_20_GetOrNot}}">
+										<img src="{% static login_20_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{login_20_Percentage}}%; color: black">{{login_20_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+							</div>
+
+							<!-- 影片觀看次數 -->
+							{% if numberOfVideo == 1 %}
+								<div class="row">
+									<div class="col-lg-2" style="padding-left: 35px">
+										<div id="watch1" data-trigger="hover" data-placement="bottom"
+											data-original-title="影片觀看一次" data-html="true"
+											data-content="{{watch_1_GetOrNot}}">
+											<img src="{% static watch_1_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{watch_1_Percentage}}%; color: black">{{watch_1_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="watch2" data-trigger="hover" data-placement="bottom"
+											data-original-title="影片觀看20%" data-html="true"
+											data-content="{{watch_20_Percentage_GetOrNot}}">
+											<img src="{% static watch_20_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{watch_20_Percentage_Percentage}}%; color: black">{{watch_20_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="watch3" data-trigger="hover" data-placement="bottom"
+											data-original-title="影片觀看50%" data-html="true"
+											data-content="{{watch_50_Percentage_GetOrNot}}">
+											<img src="{% static watch_50_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{watch_50_Percentage_Percentage}}%; color: black">{{watch_50_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="watch4" data-trigger="hover" data-placement="bottom"
+											data-original-title="影片觀看100%" data-html="true"
+											data-content="{{watch_100_Percentage_GetOrNot}}">
+											<img src="{% static watch_100_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{watch_100_Percentage_Percentage}}%; color: black">{{watch_100_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+								</div>
+							{% endif %}
+
+							<!-- 討論次數 -->
+							<div class="row">
+								<div class="col-lg-2" style="padding-left: 35px">
+									<div id="forum1" data-trigger="hover" data-placement="bottom"
+										data-original-title="討論一次" data-html="true"
+										data-content="{{forum_1_GetOrNot}}">
+										<!-- data-html="true" 用<br>即可換行 -->
+										<img src="{% static forum_1_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{forum_1_Percentage}}%; color: black">{{forum_1_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="forum2" data-trigger="hover" data-placement="bottom"
+										data-original-title="討論三次" data-html="true"
+										data-content="{{forum_3_GetOrNot}}">
+										<img src="{% static forum_3_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{forum_3_Percentage}}%; color: black">{{forum_3_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="forum3" data-trigger="hover" data-placement="bottom"
+										data-original-title="討論八次" data-html="true"
+										data-content="{{forum_8_GetOrNot}}">
+										<img src="{% static forum_8_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{forum_8_Percentage}}%; color: black">{{forum_8_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+								<div class="col-lg-2 col-lg-offset-1" style="padding-left: 35px">
+									<div id="forum4" data-trigger="hover" data-placement="bottom"
+										data-original-title="討論十五次" data-html="true"
+										data-content="{{forum_15_GetOrNot}}">
+										<img src="{% static forum_15_Img %}"
+											style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+									</div>
+									<!-- 進度條 -->
+									<div class="progress  progress-striped active">
+										<div class="progress-bar progress-bar-info"
+											style="width: {{forum_15_Percentage}}%; color: black">{{forum_15_Percentage}}%</div>
+									</div>
+									<!--  -->
+								</div>
+							</div>
+
+							<!-- 練習題作答次數 -->
+							{% if uumberOfQuestion == 1 %}
+								<div class="row">
+									<div class="col-lg-2" style="padding-left: 35px">
+										<div id="answer1" data-trigger="hover" data-placement="bottom"
+											data-original-title="練習題作答一次" data-html="true"
+											data-content="{{answer_1_GetOrNot}}">
+											<img src="{% static answer_1_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{answer_1_Percentage}}%; color: black">{{answer_1_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="answer2" data-trigger="hover" data-placement="bottom"
+											data-original-title="練習題作答20%" data-html="true"
+											data-content="{{answer_20_Percentage_GetOrNot}}">
+											<img src="{% static answer_20_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{answer_20_Percentage_Percentage}}%; color: black">{{answer_20_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="answer3" data-trigger="hover" data-placement="bottom"
+											data-original-title="練習題作答50%" data-html="true"
+											data-content="{{answer_50_Percentage_GetOrNot}}">
+											<img src="{% static answer_50_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{answer_50_Percentage_Percentage}}%; color: black">{{answer_50_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+									<div class="col-lg-2 col-lg-offset-1"
+										style="padding-left: 35px">
+										<div id="answer4" data-trigger="hover" data-placement="bottom"
+											data-original-title="練習題作答100%" data-html="true"
+											data-content="{{answer_100_Percentage_GetOrNot}}">
+											<img src="{% static answer_100_Percentage_Img %}"
+												style="width: 120px; height: 120px; text-align: right; font-size: 2em;">
+										</div>
+										<!-- 進度條 -->
+										<div class="progress  progress-striped active">
+											<div class="progress-bar progress-bar-info"
+												style="width: {{answer_100_Percentage_Percentage}}%; color: black">{{answer_100_Percentage_Percentage}}%</div>
+										</div>
+										<!--  -->
+									</div>
+								</div>
+							{% endif %}
+							<!-- 2017.11.8_新增&修改(末) -->
+						</div>
+						<!-- body -->
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">選了這門課的學生也選了</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<!-- 							<div id="images"></div> -->
+							<table width="100%"
+								class="table table-striped table-bordered table-hover">
+								<thead>
+									<tr>
+										<th><a href="https://courses.openedu.tw/courses/{{recommandcourseid.0}}/info" target="_blank"><div id="images1"></div></a></th>
+										<th><a href="https://courses.openedu.tw/courses/{{recommandcourseid.1}}/info" target="_blank"><div id="images2"></div></a></th>
+										<th><a href="https://courses.openedu.tw/courses/{{recommandcourseid.2}}/info" target="_blank"><div id="images3"></div></a></th>
+										<th><a href="https://courses.openedu.tw/courses/{{recommandcourseid.3}}/info" target="_blank"><div id="images4"></div></a></th>
+										<th><a href="https://courses.openedu.tw/courses/{{recommandcourseid.4}}/info" target="_blank"><div id="images5"></div></a></th>
+									</tr>
+								</thead>
+								<tbody>
+									<td id="recommandcourseid1"><a
+										href="https://courses.openedu.tw/courses/{{recommandcourseid.0}}/info"
+										target="_blank">{{recommandcoursename.0}}</a></td>
+									<td id="recommandcourseid2"><a
+										href="https://courses.openedu.tw/courses/{{recommandcourseid.1}}/info"
+										target="_blank">{{recommandcoursename.1}}</a></td>
+									<td id="recommandcourseid3"><a
+										href="https://courses.openedu.tw/courses/{{recommandcourseid.2}}/info"
+										target="_blank">{{recommandcoursename.2}}</a></td>
+									<td id="recommandcourseid4"><a
+										href="https://courses.openedu.tw/courses/{{recommandcourseid.3}}/info"
+										target="_blank">{{recommandcoursename.3}}</a></td>
+									<td id="recommandcourseid5"><a
+										href="https://courses.openedu.tw/courses/{{recommandcourseid.4}}/info"
+										target="_blank">{{recommandcoursename.4}}</a></td>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		
+
+		<div class="modal fade" id="myModalgrade" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{studentgrade}} &nbsp;&nbsp;&nbsp;&nbsp;平均 : {{avggrade}}
+							&nbsp;&nbsp;&nbsp;&nbsp;最高 : {{originalmaxgrade}}</h4>
+					</div>
+					<div class="modal-body" id="chartdivgrade"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		<div class="modal fade" id="myModalwatch" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{RadarColumn.0}} &nbsp;&nbsp;&nbsp;&nbsp;平均 :
+							{{originalavgwatch}} &nbsp;&nbsp;&nbsp;&nbsp;最高 :
+							{{originalMax.0}}</h4>
+					</div>
+					<div class="modal-body" id="chartdivwatch"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		<div class="modal fade" id="myModalvideo" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{RadarColumn.1}} &nbsp;&nbsp;&nbsp;&nbsp;平均 :
+							{{originalavgvideo} &nbsp;&nbsp;&nbsp;&nbsp;最高 :
+							{{originalMax.1}}</h4>
+					</div>
+					<div class="modal-body" id="chartdivvideo"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		<div class="modal fade" id="myModalforum" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{RadarColumn.2}} &nbsp;&nbsp;&nbsp;&nbsp;平均 :
+							{{originalavgforum}} &nbsp;&nbsp;&nbsp;&nbsp;最高 :
+							{{originalMax.2}}</h4>
+					</div>
+					<div class="modal-body" id="chartdivforum"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+
+		<div class="modal fade" id="myModalcomplete" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{RadarColumn.3}}% &nbsp;&nbsp;&nbsp;&nbsp;平均 :
+							{{originalavgcomplete}}% &nbsp;&nbsp;&nbsp;&nbsp;最高 :
+							{{originalMax.3}}%</h4>
+					</div>
+					<div class="modal-body" id="chartdivcomplete"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+
+		<div class="modal fade" id="myModalc_complete" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">我的成績 :
+							{{RadarColumn.4}}% &nbsp;&nbsp;&nbsp;&nbsp;平均 :
+							{{originalavgc_complete}}% &nbsp;&nbsp;&nbsp;&nbsp;最高 :
+							{{originalMax.4}}%</h4>
+					</div>
+					<div class="modal-body" id="chartdivc_complete"
+						style="height: 400px; padding-top: 0px; padding-left: 0px; padding-right: 0px; padding-buttom: 0px;"></div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+
+
+		
+
+	</div>
+	<!-- /#wrapper -->
+
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
+	<!-- amchart -->
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+	<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+
+	<script
+		src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+	<!-- jQuery -->
+	<script src="{% static './vendor/jquery/jquery.min.js' %}"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="{% static './vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="{% static './vendor/metisMenu/metisMenu.min.js' %}"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="{% static './dist/js/sb-admin-2.js' %}"></script>
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
+	<!-- google chart JavaScript -->
+	<script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<script type="text/javascript" src="{% static 'vendor/jquery/jquery.js' %}"></script>
+	
+	<!-- slick -->
+	 <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+	<script src="{% static './slick/slick.js' %}" type="text/javascript" charset="utf-8"></script>
+	
+	<!-- 2017.11.8_新增&修改(末) -->
+	
+	<!--  slick -->
+	<script type="text/javascript">
+	$(document).ready(function(){
+	      $(".regular").slick({
+	        dots: true,
+	        infinite: true,
+	        slidesToShow: 3,
+	        slidesToScroll: 3
+	      });
+	      
+	    });
+	</script>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("h1").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images");
+	       				$("#images").attr("width","10%");
+	       				 $("#institute").text(item.institute);
+	       				 $("#category").text(item.category);
+	       				 $("#subcategory").text(item.subcategory);
+	       				 $.each(item.instructors, function(k,teacher){
+	       					 $("#teacherlist").text($("#teacherlist").text()+" "+teacher.name);
+	       				 });
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("h1").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images");
+        				 $("#institute").text(item.institute);
+        				 $("#category").text(item.category);
+	       				 $("#subcategory").text(item.subcategory);
+        				 $.each(item.instructors, function(k,teacher){
+        					 $("#teacherlist").text($("#teacherlist").text()+" "+teacher.name);
+        				 });
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("#recommandcourseid1").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images1");
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("#recommandcourseid1").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images1");
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("#recommandcourseid2").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images2");
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("#recommandcourseid2").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images2");
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("#recommandcourseid3").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images3");
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("#recommandcourseid3").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images3");
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("#recommandcourseid4").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images4");
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("#recommandcourseid4").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images4");
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	$.getJSON("{% static 'data/openeduAPI.js' %}", function(data){
+        		$.each(data, function(i,item){
+        			if(item.courseName ==  $("#recommandcourseid5").text() && item.startDate == $("#startDate").text()){
+	       				 $("<img/>").attr("src", item.courseImage).appendTo("#images5");
+	       				 return false;
+       				}
+        			else if(item.courseName ==  $("#recommandcourseid5").text()/* && item.startDate == $("#startDate").text()*/){
+        				 $("<img/>").attr("src", item.courseImage).appendTo("#images5");
+        				 return false;
+        			}
+       			});	    
+        	});
+        });
+    </script>
+
+	<script>
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+	});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#login1").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#login2").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#login3").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#login4").popover();
+		});
+	</script>
+
+	<!-- 2017.11.8_新增&修改(始) -->
+	<script>
+		$(document).ready(function(){
+			$("#watch1").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#watch2").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#watch3").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#watch4").popover();
+		});
+	</script>
+
+	<script>
+		$(document).ready(function(){
+			$("#forum1").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#forum2").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#forum3").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#forum4").popover();
+		});
+	</script>
+
+	<script>
+		$(document).ready(function(){
+			$("#answer1").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#answer2").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#answer3").popover();
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$("#answer4").popover();
+		});
+	</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivgrade", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "題目成績",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_Grade.0}}",
+		    "visits": {{allstudentgrade.0}}
+		  }, {
+		    "country": "{{columnName_Grade.1}}",
+		    "visits": {{allstudentgrade.1}}
+		  }, {
+		    "country": "{{columnName_Grade.2}}",
+		    "visits": {{allstudentgrade.2}}
+		  }, {
+		    "country": "{{columnName_Grade.3}}",
+		    "visits": {{allstudentgrade.3}}
+		  }, {
+		    "country": "{{columnName_Grade.4}}",
+		    "visits": {{allstudentgrade.4}}
+		  }, {
+		    "country": "{{columnName_Grade5}}",
+		    "visits": {{allstudentgrade.5}}
+		  }, {
+		    "country": "{{columnName_Grade.6}}",
+		    "visits": {{allstudentgrade.6}}
+		  }, {
+		    "country": "{{columnName_Grade.7}}",
+		    "visits": {{allstudentgrade.7}}
+		  }, {
+		    "country": "{{columnName_Grade.8}}",
+		    "visits": {{allstudentgrade.8}}
+		  },{
+			    "country": "{{columnName_Grade.9}}",
+			    "visits": {{allstudentgrade.9}}
+		  },{
+			    "country": "{{columnName_Grade.10}}",
+			    "visits": {{allstudentgrade.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": false
+		  }
+
+		} );
+</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivwatch", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "觀看次數",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_Watch.0}}",
+		    "visits": {{allstudentwatch.0}}
+		  }, {
+		    "country": "{{columnName_Watch.1}}",
+		    "visits": {{allstudentwatch.1}}
+		  }, {
+		    "country": "{{columnName_Watch.2}}",
+		    "visits": {{allstudentwatch.2}}
+		  }, {
+		    "country": "{{columnName_Watch.3}}",
+		    "visits": {{allstudentwatch.3}}
+		  }, {
+		    "country": "{{columnName_Watch.4}}",
+		    "visits": {{allstudentwatch.4}}
+		  }, {
+		    "country": "{{columnName_Watch.5}}",
+		    "visits": {{allstudentwatch.5}}
+		  }, {
+		    "country": "{{columnName_Watch.6}}",
+		    "visits": {{allstudentwatch.6}}
+		  }, {
+		    "country": "{{columnName_Watch.7}}",
+		    "visits": {{allstudentwatch.7}}
+		  }, {
+		    "country": "{{columnName_Watch.8}}",
+		    "visits": {{allstudentwatch.8}}
+		  },{
+			    "country": "{{columnName_Watch.9}}",
+			    "visits": {{allstudentwatch.9}}
+		  },{
+			    "country": "{{columnName_Watch.10}}",
+			    "visits": {{allstudentwatch.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": true
+		  }
+
+		} );
+</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivvideo", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "觀看影片數",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_Video.0}}",
+		    "visits": {{allstudentvideo.0}}
+		  }, {
+		    "country": "{{columnName_Video.1}}",
+		    "visits": {{allstudentvideo.1}}
+		  }, {
+		    "country": "{{columnName_Video.2}}",
+		    "visits": {{allstudentvideo.2}}
+		  }, {
+		    "country": "{{columnName_Video.3}}",
+		    "visits": {{allstudentvideo.3}}
+		  }, {
+		    "country": "{{columnName_Video.4}}",
+		    "visits": {{allstudentvideo.4}}
+		  }, {
+		    "country": "{{columnName_Video.5}}",
+		    "visits": {{allstudentvideo.5}}
+		  }, {
+		    "country": "{{columnName_Video.6}}",
+		    "visits": {{allstudentvideo.6}}
+		  }, {
+		    "country": "{{columnName_Video.7}}",
+		    "visits": {{allstudentvideo.7}}
+		  }, {
+		    "country": "{{columnName_Video.8}}",
+		    "visits": {{allstudentvideo.8}}
+		  },{
+			    "country": "{{columnName_Video.9}}",
+			    "visits": {{allstudentvideo.9}}
+		  },{
+			    "country": "{{columnName_Video.10}}",
+			    "visits": {{allstudentvideo.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": false
+		  }
+
+		} );
+</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivforum", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "討論區發文數",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_Forum.0}}",
+		    "visits": {{allstudentforum.0}}
+		  }, {
+		    "country": "{{columnName_Forum.1}}",
+		    "visits": {{allstudentforum.1}}
+		  }, {
+		    "country": "{{columnName_Forum.2}}",
+		    "visits": {{allstudentforum.2}}
+		  }, {
+		    "country": "{{columnName_Forum.3}}",
+		    "visits": {{allstudentforum.3}}
+		  }, {
+		    "country": "{{columnName_Forum.4}}",
+		    "visits": {{allstudentforum.4}}
+		  }, {
+		    "country": "{{columnName_Forum.5}}",
+		    "visits": {{allstudentforum.5}}
+		  }, {
+		    "country": "{{columnName_Forum.6}}",
+		    "visits": {{allstudentforum.6}}
+		  }, {
+		    "country": "{{columnName_Forum.7}}",
+		    "visits": {{allstudentforum.7}}
+		  }, {
+		    "country": "{{columnName_Forum.8}}",
+		    "visits": {{allstudentforum.8}}
+		  },{
+			    "country": "{{columnName_Forum.9}}",
+			    "visits": {{allstudentforum.9}}
+		  },{
+			    "country": "{{columnName_Forum.10}}",
+			    "visits": {{allstudentforum.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": false
+		  }
+
+		} );
+</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivcomplete", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "問答題完成率",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_Complete.0}}",
+		    "visits": {{allstudentcomplete.0}}
+		  }, {
+		    "country": "{{columnName_Complete.1}}",
+		    "visits": {{allstudentcomplete.1}}
+		  }, {
+		    "country": "{{columnName_Complete.2}}",
+		    "visits": {{allstudentcomplete.2}}
+		  }, {
+		    "country": "{{columnName_Complete.3}}",
+		    "visits": {{allstudentcomplete.3}}
+		  }, {
+		    "country": "{{columnName_Complete.4}}",
+		    "visits": {{allstudentcomplete.4}}
+		  }, {
+		    "country": "{{columnName_Complete.5}}",
+		    "visits": {{allstudentcomplete.5}}
+		  }, {
+		    "country": "{{columnName_Complete.6}}",
+		    "visits": {{allstudentcomplete.6}}
+		  }, {
+		    "country": "{{columnName_Complete.7}}",
+		    "visits": {{allstudentcomplete.7}}
+		  }, {
+		    "country": "{{columnName_Complete.8}}",
+		    "visits": {{allstudentcomplete.8}}
+		  },{
+			    "country": "{{columnName_Complete.9}}",
+			    "visits": {{allstudentcomplete.9}}
+		  },{
+			    "country": "{{columnName_Complete.10}}",
+			    "visits": {{allstudentcomplete.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": false
+		  }
+
+		} );
+</script>
+
+	<script>
+
+	var chart = AmCharts.makeChart( "chartdivc_complete", {
+		  "type": "serial",
+		  "theme": "light",
+		  "titles": [{
+			    "text": "問答題答對率",
+			    "size": 15
+			  }],
+		  "dataProvider": [ {
+		    "country": "{{columnName_C_Complete.0}}",
+		    "visits": {{allstudentc_complete.0}}
+		  }, {
+		    "country": "{{columnName_C_Complete.1}}",
+		    "visits": {{allstudentc_complete.1}}
+		  }, {
+		    "country": "{{columnName_C_Complete.2}}",
+		    "visits": {{allstudentc_complete.2}}
+		  }, {
+		    "country": "{{columnName_C_Complete.3}}",
+		    "visits": {{allstudentc_complete.3}}
+		  }, {
+		    "country": "{{columnName_C_Complete.4}}",
+		    "visits": {{allstudentc_complete.4}}
+		  }, {
+		    "country": "{{columnName_C_Complete.5}}",
+		    "visits": {{allstudentc_complete.5}}
+		  }, {
+		    "country": "{{columnName_C_Complete.6}}",
+		    "visits": {{allstudentc_complete.6}}
+		  }, {
+		    "country": "{{columnName_C_Complete.7}}",
+		    "visits": {{allstudentc_complete.7}}
+		  }, {
+		    "country": "{{columnName_C_Complete.8}}",
+		    "visits": {{allstudentc_complete.8}}
+		  },{
+			    "country": "{{columnName_C_Complete.9}}",
+			    "visits": {{allstudentc_complete.9}}
+		  },{
+			    "country": "{{columnName_C_Complete.10}}",
+			    "visits": {{allstudentc_complete.10}}
+		  }],
+		  
+		  "valueAxes": [ {
+		    "gridColor": "#FFFFFF",
+		    "gridAlpha": 0.2,
+		    "dashLength": 0
+		  } ],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [ {
+		    "balloonText": "[[category]]: <b>[[value]]</b>",
+		    "fillAlphas": 0.8,
+		    "lineAlpha": 0.2,
+		    "type": "column",
+		    "valueField": "visits"
+		  } ],
+		  "chartCursor": {
+		    "categoryBalloonEnabled": false,
+		    "cursorAlpha": 0,
+		    "zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+		    "gridPosition": "start",
+		    "gridAlpha": 0,
+		    "tickPosition": "start",
+		    "tickLength": 20,
+		  },
+		  "export": {
+		    "enabled": false
+		  }
+
+		} );
+</script>
+
+
+
+	<script>
+    var chart = AmCharts.makeChart("chartdiv1", {
+        "type": "radar",
+        "theme": "light",
+        "dataProvider": [{
+            "country": "觀看次數(%)",
+            "litres": {{avg_watch_count}},
+            "units": {{student_watch_count}}
+        },  {
+            "country": "觀看影片數(%)",
+            "litres": {{avg_video_count}},
+            "units": {{student_video_count}}
+        }, {
+            "country": "討論區發文數(%)",
+            "litres": {{avg_forum_num}},
+            "units": {{student_forum_num}}
+        }, {
+            "country": "問答題完成率(%)",
+            "litres":  {{avg_complete_rate}},
+            "units": {{student_complete_rate}}
+        }, {
+            "country": "問答題答對率(%)",
+            "litres": {{avg_c_complete_rate}},
+            "units": {{student_c_complete_rate}}
+        }],
+        "valueAxes": [{
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "maximum": 100,
+            "axisAlpha": 0.15
+        }, {
+            "id": "v2",
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0,
+            "inside": true
+        }],
+        "startDuration": 2,
+        "graphs": [{
+            "balloonText": "[[value]] %為所有學生平均值",
+            "bullet": "round",
+            "valueField": "litres",
+            "fillAlphas": 0.3,
+            "bulletSize" : 1,
+        }, {
+            "balloonText": "[[value]] %為本課程個人表現值",
+            "bullet": "square",
+            "valueField": "units",    
+            "fillAlphas": 0.3,
+            "bulletSize" : 1,
+            
+        }],
+        
+        
+        "categoryField": "country"
+    });
+    </script>
+
+	<script>
+var chart = AmCharts.makeChart( "chartdivdonut", {
+  "type": "pie",
+  "theme": "light",
+  "dataProvider": [ {
+    "title": "已完成",
+    "value": {{chapterpencent}}
+  }, {
+    "title": "未完成",
+    "value": {{chapterundonepencent}}
+  } ],
+  "titleField": "title",
+  "valueField": "value",
+  "labelRadius": 5,
+
+  "radius": "42%",
+  "innerRadius": "60%",
+  "labelText": "[[title]]",
+  "export": {
+    "enabled": false
+  }
+} );
+</script>
+	<script type="text/javascript">
+		google.charts.load('current', {'packages':['corechart']});
+		google.charts.setOnLoadCallback(drawChart_chart_durationWeek);
+		
+		function drawChart_chart_durationWeek() {
+			var data_recentWeekLogin1 = google.visualization.arrayToDataTable([
+			    ['week', '個人表現(%)'],
+			    ['觀看次數(%)', {{student_watch_count}}],
+			    ['觀看影片數(%)', {{student_video_count}}],
+			    ['討論區發文數(%)', {{student_forum_num}}],
+			    ['問答題完成率(%)', {{student_complete_rate}}],
+			    ['問答題答對率(%)', {{student_c_complete_rate}}]
+			   
+			    
+		  	]);
+			var options = {
+				    hAxis: {titleTextStyle: {color: '#333'}},
+				    vAxis: {minValue: 0}
+				};
+		  	var chart = new google.visualization.AreaChart(document.getElementById('Div1'));
+		  	chart.draw(data_recentWeekLogin1, options);
+		  	window.addEventListener("resize", function(){
+				chart.draw(data_recentWeekLogin1, options);
+			});
+		}
+    </script>
+
+	<script>
+    var chart = AmCharts.makeChart("chartdiv2", {
+        "type": "radar",
+        "theme": "light",
+        "dataProvider": [{
+            "country": "註冊人數",
+            "litres":20,
+            "units":50
+        },  {
+            "country": "行動觀看人次",
+            "litres": 33,
+            "units": 44
+        }, {
+            "country": "測驗題數量",
+            "litres": 55,
+            "units": 66
+        }, {
+            "country": "影片觀看人數",
+            "litres":  77,
+            "units":88
+        }, {
+            "country": "課程影片數目",
+            "litres": 44,
+            "units": 11
+        }],
+        "valueAxes": [{
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0.15
+        }, {
+            "id": "v2",
+            "axisTitleOffset": 20,
+            "minimum": 0,
+            "axisAlpha": 0,
+            "inside": true
+        }],
+        "startDuration": 2,
+        "graphs": [{
+            "balloonText": "[[value]] 為所有課程平均值",
+            "bullet": "round",
+            "valueField": "litres"
+        }, {
+            "balloonText": "[[value]] 為本課程表現值",
+            "bullet": "square",
+            "valueField": "units",
+            
+        }],
+        "categoryField": "country"
+    });
+    </script>
+
+
+
+
+	<script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+
+      function drawTable() {
+      
+        var data = new google.visualization.DataTable();
+        
+        data.addColumn('string', '影片名稱');     
+        
+
+        
+        data.addRows({{jsonArray_Charter | safe}});
+        
+        var table = new google.visualization.Table(document.getElementById('table_div'));
+        
+        var cssClassNames = {
+                'headerRow': 'cssHeaderRow',
+                'tableRow': 'cssTableRow',
+                'oddTableRow': 'cssOddTableRow',
+                'selectedTableRow': 'cssSelectedTableRow',
+                'hoverTableRow': 'cssHoverTableRow',
+                'headerCell': 'cssHeaderCell',
+                'tableCell': 'cssTableCell',
+                'rowNumberCell': 'cssRowNumberCell'
+            };
+        
+        options = {
+        	    page: 'enable',
+        	      cssClassNames: cssClassNames,
+        	    showRowNumber: true,
+        	      width: '100%', 
+        		  height: '100%',
+        	    pageSize:30
+        	};
+        table.draw(data,options);
+      }
+    </script>
+
+
+
+	<script>
+//     	$(document).ready(function(){
+//     	    $(".nav-tabs a").click(function(){
+//     	        $(this).tab('show');
+    	        
+//     	    });
+//     	});
+    </script>
+
+	
+</body>
+</html>

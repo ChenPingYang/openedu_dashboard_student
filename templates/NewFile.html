@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(function(){
+	$.ajax( {
+		url: "http://140.134.26.71:58080/web-prog/Hotels",
+		type: "get",
+		dataType: "json",
+		success: function(data) {
+			//處理資料
+			var temp = 0;
+			var items = data.Infos.Info;
+			for(var i = 0; i< items.length; i++){
+				var name = items[i].Name;
+				var imgURL = items[i].Picture1;
+				var webURL = items[i].Website;
+				
+					$(".row").append('<div class="col-xs-7 col-sm-6 col-md-4 col-lg-2">'+items[i].Name+'<p><a href = "'+webURL+'" target="_blank"><img src="'+imgURL+
+					'" height="200" width="200" alt="未提供圖片"></a></div>');
+				
+			}
+		},
+		error: function() {
+			//處理錯誤
+		}
+	});
+});
+</script>
+</head>
+<body>
+
+		<div class="container">
+        <h1>飯店表</h1>
+		<p class="text-info">點擊圖片可連接到該飯店官網.</p>
+	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+		</div>
+	</div> 
+
+</body>
+</html>

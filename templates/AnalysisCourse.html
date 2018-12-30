@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta http-equiv="Content-Type" content="text/html;">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<title>中華開放教育平台</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="{% static './vendor/datatables-plugins/dataTables.bootstrap.css' %}"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static './vendor/datatables-responsive/dataTables.responsive.css' %}"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static './vendor/font-awesome/css/font-awesome.min.css' %}"
+	rel="stylesheet" type="text/css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNInG: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		{% include 'sidebar_student.html' %}
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-md-10">
+					<h1 class="page-header">{{courseName}}</h1>
+				</div>
+			</div>
+			{% if IsLogin == 1 %}
+				{% if mode == 1 %}
+					<form action="#" method="post" name="form_showChart">
+						<select class="selectpicker" style="height: 27px"
+							onchange="chgSelect()" id="selectCourse" name="selectCourse">
+							<option>-請選擇-</option>
+							{% for data in allCourse %}
+								<option>{{data}}</option>
+							{% endfor %}
+						</select>
+					</form>
+				{% endif %}
+
+				<div class="row">
+					<div class="col-lg-12">
+						<!-- /.panel -->
+						<div class="panel panel-default" id="educationChartDiv">
+							<div class="panel-heading">
+								註冊人數變化圖 <i data-toggle="tooltip" data-placement="top" title=""
+									data-track-event="edx.bi.tooltip.displayed"
+									class="ico ico-tooltip fa fa-info-circle has-tooltip"
+									data-original-title="選修課程人數(不含已退選人數)"></i>
+							</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div id="chart_div" style="width: 100%; height: 100%;"></div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+						</div>
+						<!-- /.panel -->
+					</div>
+					</div>
+
+
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									總註冊人數 <i data-toggle="tooltip" data-placement="top" title=""
+										data-track-event="edx.bi.tooltip.displayed"
+										class="ico ico-tooltip fa fa-info-circle has-tooltip"
+										data-original-title="目前選修課程人數"></i>
+								</h3>
+							</div>
+							<div class="panel-body">{{totalRegisteredPersons}}</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									退選人數 <i data-toggle="tooltip" data-placement="top" title=""
+										data-track-event="edx.bi.tooltip.displayed"
+										class="ico ico-tooltip fa fa-info-circle has-tooltip"
+										data-original-title="選修課程但取消註冊之總人數"></i>
+								</h3>
+							</div>
+							<div class="panel-body">{{withDrew}}</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									近一次更新新增註冊人數 <i data-toggle="tooltip" data-placement="top"
+										title="" data-track-event="edx.bi.tooltip.displayed"
+										class="ico ico-tooltip fa fa-info-circle has-tooltip"
+										data-original-title="近一次更新新增註冊人數"></i>
+								</h3>
+							</div>
+							<div class="panel-body">{{weekChageRegisteredPersons}}</div>
+						</div>
+					</div>
+				</div>
+
+					<div class="row">
+					<div class="col-lg-6">
+						<div class="panel panel-default" id="ageChartDiv">
+							<div class="panel-heading">年齡分布長條圖</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div id="ageChart" style="width: 100%; height: 100%;"></div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+					<div class="col-lg-6"></div>
+					<!-- /.col-lg-6 -->
+				</div>
+				<div class="row">
+
+						<!-- /.col-lg-6 -->
+					<div class="col-lg-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								活躍度折線圖 <i data-toggle="tooltip" data-placement="top" title=""
+									data-track-event="edx.bi.tooltip.displayed"
+									class="ico ico-tooltip fa fa-info-circle has-tooltip"
+									data-original-title="活躍學生(學習者最後登入的時間在課程期間的一半之後
+						)與非活躍學生(學習者最後登入的時間在課程期間的一半之前
+						)折線圖"></i>
+							</div>
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div id="curve_chart" style="width: 100%; height: 100%;"></div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+						</div>
+						<!-- /.panel -->
+					</div>
+
+				</div>
+				<div class="row">
+
+						<!-- /.col-lg-6 -->
+					<div class="col-lg-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								練習題作答率折線圖 <i data-toggle="tooltip" data-placement="top"
+									title="" data-track-event="edx.bi.tooltip.displayed"
+									class="ico ico-tooltip fa fa-info-circle has-tooltip"
+									data-original-title="作答率=學習者作答題數/總題數"></i>
+								</div>
+
+							<!-- /.panel-heading -->
+							<div class="panel-body">
+								<div id="answer_chart" style="width: 100%; height: 100%;"></div>
+								<!-- /.table-responsive -->
+							</div>
+							<!-- /.panel-body -->
+						</div>
+						<!-- /.panel -->
+					</div>
+
+				</div>
+			{% if IsLogin == 2 %}
+				<font size="5">無權限瀏覽此頁面!</font>
+			{% endif %}
+	</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="{% static './vendor/jquery/jquery.min.js' %}"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="{% static './vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="{% static './vendor/metisMenu/metisMenu.min.js' %}"></script>
+
+	<!-- DataTables JavaScript -->
+	<script src="{% static './vendor/datatables/js/jquery.dataTables.js' %}"></script>
+	<script src="{% static './vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+	<script src="{% static './vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="{% static './dist/js/sb-admin-2.js' %}"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+	<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+	<!-- googleChart javascript for ageChart -->
+	<script>
+		google.charts.load("current", {
+			packages : [ 'corechart' ]
+		});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+					[ "Element", "人數", {role : "style"} ], 
+					[ "17歲以下", {{age_17}}, "#b87333" ],
+					[ "18歲到25歲", {{age_18_25}}, "silver" ],
+					[ "25歲以上", {{age_26_}}, "gold" ]
+					]);
+
+			var view = new google.visualization.DataView(data);
+			view.setColumns([ 0, 1, {
+				calc : "stringify",
+				sourceColumn : 1,
+				type : "string",
+				role : "annotation"
+			}, 2 ]);
+
+			var options = {
+				title : "", 
+				bar : {
+					groupWidth : "95%"
+				},
+				legend : {
+					position : "none"
+				},
+			};
+			var chart = new google.visualization.ColumnChart(document
+					.getElementById("ageChart"));
+			chart.draw(view, options);
+			window.addEventListener("resize", function(){
+		    	chart.draw(data, options);
+		    });
+		}
+	</script>
+
+	<!-- googleChart javascript for educationChart -->
+	<script>
+	google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable(
+    		  {{jsonArray_RegisteredPersons | safe}});
+
+      var options = {
+        title: '人數',
+        hAxis: {title: '日期',  titleTextStyle: {color: '#333'}},
+        vAxis: {minValue: 0}
+      };
+
+      var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+	</script>
+
+	<!--  googleChart javascript for registeredChart  -->
+	<script>
+		google.charts.load('current', {
+			'packages' : [ 'corechart' ]
+		});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+			var data = google.visualization.arrayToDataTable([
+					[ '註冊', '人數' ], 
+					[ '台灣', {{registeredPersons_Taiwan}}] ,
+					[ '非台灣', {{registeredPersons_Foreign}}]
+					]);
+
+			var options = {
+				title : ''
+			};
+
+			var chart = new google.visualization.PieChart(document
+					.getElementById('registeredChart'));
+
+			chart.draw(data, options);
+		 	window.addEventListener("resize", function(){
+	        	chart.draw(data, options);
+	        });
+		}
+	</script>
+
+	<script>
+		google.charts.load('current', {
+			'packages' : [ 'corechart' ]
+		});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+			var data = google.visualization.arrayToDataTable([
+					[ '學員', '性別' ], 
+					[ '男性', {{male}}] ,
+					[ '女性', {{female}}]
+					]);
+
+			var options = {
+				title : ''
+			};
+
+			var chart = new google.visualization.PieChart(document
+					.getElementById('registeredsexChart'));
+
+			chart.draw(data, options);
+		 	window.addEventListener("resize", function(){
+	        	chart.draw(data, options);
+	        });
+		}
+	</script>
+
+
+
+
+
+	<script>
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{jsonArray_active | safe}});
+
+        var options = {
+          title: '人數',
+          curveType: 'function',
+     
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+	<script>
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable({{jsonArray_answerRatio | safe}});
+
+        var options = {
+          title: '作答率',
+          curveType: 'function',
+          vAxis: {format: 'percent'},
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('answer_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+
+
+
+
+	<!-- 若selectCourse內容經過改變，即傳送請求ChartDataServlet -->
+	<script>
+		function chgSelect()
+		{	
+			var select = document.getElementById("selectCourse").value;
+			form_showChart.action = "ChartDataServlet?mode=1&course="+select;
+			form_showChart.submit();
+		}
+	</script>
+
+	<script>
+    	$(document).ready(function(){
+    	    $(".nav-tabs a").click(function(){
+    	        $(this).tab('show');
+    	        
+    	    });
+    	});
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css'%}" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static './dist/css/sb-admin-2.css'%}" rel="stylesheet">
+
+<!-- Morris Charts CSS -->
+<link href="{% static './vendor/morrisjs/morris.css'%}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static './vendor/font-awesome/css/font-awesome.min.css'%}"
+	rel="stylesheet" type="text/css">
+
+
+<!-- Facebook Fonts-->
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+.navbar-center {
+	display: inline-block;
+	float: none;
+	vertical-align: top;
+}
+
+.navbar-collapse-center {
+	text-align: center;
+}
+div{
+	font-family:Microsoft JhengHei;
+}
+</style>
+</head>
+<body onresize="onresizeSidebar()">
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+		style="margin-bottom: 0">
+		<div class="container">
+			<div class="navbar-header" style="height: 55px">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" onclick="sidebarBlock()"
+					aria-expanded="false" aria-controls="navbar"
+					style="float: left; margin-left: 15px; background-color: #b4daf7;">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a href="{% url 'index_student'%}" ><img id="logoJPG" src="{% static 'img/OpenEdu_Logo_W_1.png' %}"
+					style="max-height: 50px; margin-top: 5px;"></a>
+				<a href="{% url 'index_student'%}" ><img id="PanelJPG" src="{% static 'img/Panel_student.jpg' %}"
+					style="max-height: 30px; margin-top: 25px;"></a>
+
+			</div>
+			<div id="navbar"
+				class="collapse navbar-collapse navbar-collapse-center">
+				<ul class="nav navbar-nav navbar-center">
+					<li><a><font style="size: 30px">學生面板</font></a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+									<li>
+				    <a class="fa fa-facebook-square"  href="https://www.facebook.com/openedu.tw" target="_blank">
+				    </a>
+				</li>
+				<li>
+				    <a href="https://www.openedu.tw/">
+				        首頁
+				    </a>
+				</li>
+				<li>
+				    <a href="https://www.openedu.tw/list.jsp">
+				        課程查詢
+				    </a>
+				</li>
+
+				<li id="special-area">
+				    <a href="https://www.openedu.tw/special-area.jsp">
+				        夥伴平台
+				    </a>
+				</li>
+				{% if IsLogin != 1 %}
+				<li id="register-item">
+				    <a href="https://courses.openedu.tw/login?next=/dashboard">
+				        登入 | 註冊
+				    </a>
+				</li>
+				{% elif IsLogin == 1 %}
+				<li id="my-course-list" class="dropdown" style="display: none">
+				    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				        我的課程<span class="caret"></span>
+				    </a>
+					<ul class="dropdown-menu">
+						<li>
+						    <a href="https://courses.openedu.tw/dashboard" target="_self">
+						        課程列表
+						    </a>
+						</li>
+						<li>
+						    <a href="https://www.openedu.tw/dashboard4s" target="_blank">
+						        學習分析
+						    </a>
+						</li>
+						<li>
+						    <a href="http://certificates.copeneduc.org/" target="_blank">
+						        課程證書
+						    </a>
+						</li>
+						<li>
+						    <a href="https://courses.openedu.tw/logout" target="_self">
+						        登出
+						    </a>
+						</li>
+					</ul>
+			    </li>
+				<li id="account" style="display: none">
+					<a href="https://courses.openedu.tw/account/settings" target="_blank">
+						帳號
+					</a>
+				</li>
+				{% endif %}
+					{% if IsLogin == 1 %}
+						<li id="register-item"><a><font color="blue"><span
+									style="font-weight: bold;">Welcome , {{studentName}}</span></font></a></li>
+					{% elif IsLogin != 2 %}
+						<li id="register-item"><a><span
+								style="font-weight: bold;">未登入</span></a></li>
+					{% endif %}
+
+					<!--<li id="special-area"><a  href="https://www.openedu.tw/">回openedu首頁</a></li>!-->
+
+				</ul>
+
+		</div>
+			<!--/.nav-collapse -->
+		</div>
+		<!-- /.navbar-top-links -->
+
+		<div class="navbar-default sidebar" role="navigation" id="side_menu">
+			<div class="sidebar-nav navbar-collapse collapse in"
+				aria-expanded="true">
+				<ul class="nav" id="side-menu">
+					<li><a href="/index_student"><i class="fa fa-dashboard fa-fw"></i>
+							總覽</a></li>
+					<li><a href="/BasicCourseDataServlet_student"><i class="fa fa-dashboard fa-fw"></i>
+							個人選課資料</a></li>
+					<li><a href="/SuggestedCourses_v1"><i class="fa fa-edit fa-fw"></i>
+							推薦課程</a></li>
+					<li><a href="/glossary_student"><i class="fa fa-edit fa-fw"></i>
+							名詞解釋</a></li>
+
+				</ul>
+			</div>
+			<!-- /.sidebar-collapse -->
+		</div>
+		<!-- /.navbar-static-side -->
+	</nav>
+	<script type="text/javascript">
+		if(document.body.clientWidth < 505){
+			logoJPG.style.height = '25px';
+			PanelJPG.style.height = '13px';
+		}
+		function onresizeSidebar() {
+			if (document.body.clientWidth < 768) {
+				side_menu.style.display = 'none';
+			} else {
+				side_menu.style.display = 'block';
+			}
+			
+			if(document.body.clientWidth < 505){
+				logoJPG.style.height = '25px';
+				PanelJPG.style.height = '13px';
+			}
+			else {
+				logoJPG.style.height = '50px';
+				PanelJPG.style.height = '30px';
+			}
+			// 			alert("5121");
+		}
+		var i = 0;
+		function sidebarBlock() {
+			if (side_menu.style.display == 'none')
+				side_menu.style.display = 'block';
+			else
+				side_menu.style.display = 'none';
+		}
+	</script>
+</body>
+</html>

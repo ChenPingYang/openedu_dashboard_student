@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<title>中華開放教育平台</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="{% static './vendor/datatables-plugins/dataTables.bootstrap.css' %}"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static './vendor/datatables-responsive/dataTables.responsive.css' %}"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static './dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+
+<!-- Custom Fonts -->
+<link href="{% static './vendor/font-awesome/css/font-awesome.min.css' %}"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Morris Charts CSS -->
+<link href="{% static './vendor/morrisjs/morris.css' %}" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+.navbar-center {
+	display: inline-block;
+	float: none;
+	vertical-align: top;
+}
+
+.navbar-collapse-center {
+	text-align: center;
+}
+
+/* .cssHeaderRow { */
+/* 	background-color: #2A94D6; */
+/* } */
+
+/* .cssTableRow { */
+/* 	background-color: #F0F1F2; */
+/* } */
+
+/* .cssOddTableRow { */
+/* 	background-color: #F0F1F2; */
+/* } */
+
+/* .cssSelectedTableRow { */
+/* 	font-size: 20px; */
+/* 	font-weight: bold; */
+/* } */
+
+/* .cssHoverTableRow { */
+/* 	background: #ccc; */
+/* } */
+
+/* .cssHeaderCell { */
+/* 	color: #FFFFFF; */
+/* 	font-size: 16px; */
+/* 	padding: 10px !important; */
+/* 	border: solid 1px #FFFFFF; */
+/* } */
+
+/* .cssTableCell { */
+/* 	font-size: 16px; */
+/* 	padding: 10px !important; */
+/* 	border: solid 1px #FFFFFF; */
+/* } */
+
+/* .cssRowNumberCell { */
+/* 	text-align: center; */
+/* } */
+</style>
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		{% include 'sidebar_student.html' %}
+
+		<div id="page-wrapper">
+			<div class="row" style="padding-top: 20px;">
+				<div class="col-lg-3">
+					<div class="panel panel-red">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+			                    	<i class="fa fa-book fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">{{totalcourse}}</div>
+									<div>課程總數</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-book fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">{{startcourse}}</div>
+									<div>開課中課程</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-book fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">{{endcourse}}</div>
+									<div>結束課程</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="panel panel-yellow">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-user fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">{{todayLogin}}</div>
+									<div>今日登入次數</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div style="text-align: left;" class="col-lg-6">
+									<font style="font-weight: bold;">修課中
+										({{CoursefinalUpdate }} updated) </font>
+								</div>
+								<div style="text-align: right;" class="col-lg-6">
+									<a><font color="red"><span
+											style="font-weight: bold;">待加強</span></font></a>&nbsp;:&nbsp;&nbsp;登入次數+觀看次數小於平均
+								</div>
+							</div>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							{% if startexist == True %}
+								<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example1">
+									<thead>
+										<tr>
+											<th>開課中課程名稱</th>
+											<th>登入次數</th>
+											<th>最後登入</th>
+											<th>剩餘天數</th>
+											<th>學習狀況</th>
+											<th>課程連結</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for temp in basiccourse %}
+											{% if temp.5 == '0' %}
+												<tr>
+													<td><a
+														href="ChartDataServlet?mode=2&course={{temp.3 }}"
+														target="_blank">{{temp.0 }}</a></td>
+													<td>{{temp.8 }}</td>
+													<td>{{temp.9 }}</td>
+													{% if temp.4 > 30 %}
+														<td>{{temp.4 }}</td>
+													{% endif %}
+													{% if temp.4 <= 30 %}
+														<td><a><font color="blue"><span
+																	style="font-weight: bold;">{{temp.4 }}</span></font></a></td>
+													{% endif %}
+													<td><a><font color="red"><span
+																style="font-weight: bold;">{{temp.11 }}</span></font></a></td>
+													<td><a
+														href="https://courses.openedu.tw/courses/{{temp.7}}/info"
+														target="_blank">學習去</a></td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+									</tbody>
+								</table>
+							{% else %}
+								<div>
+									尚無課程&nbsp;<a href="https://www.openedu.tw/list.jsp"
+										target="_blank">立即選課</a>
+								</div>
+							{% endif %}
+						</div>
+						<!-- /.panel-body -->
+					</div>
+				</div>
+				<!-- /.panel -->
+				<div class="row">
+					<div class="col-lg-5">
+						<div class="panel panel-primary ">
+							<div class="panel-heading">近一個月熱門課程 ({{CoursefinalUpdate }}
+								updated)</div>
+							<div class="panel-body">
+								<table style="width: 100%"
+									class="table table-striped table-bordered table-hover"
+									id="dataTables-example5">
+									<thead>
+										<tr>
+											<th>課程名稱</th>
+											<th>課程編號</th>
+											<th>人數</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for testList in courseLogin %}
+											<tr>
+												<td>{{testList.0 }}</td>
+												<td><a
+													href="https://courses.openedu.tw/courses/{{testList.1}}/info"
+													target="_blank">{{testList.1}}</a></td>
+												<td>{{testList02 }}</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- /.panel -->
+					</div>
+				</div>
+
+				<!-- 				<div class="col-lg-5"> -->
+				<!-- 					<div class="panel panel-primary"> -->
+				<!-- 						<div class="panel-heading"> -->
+				<!-- 							<span style="font-weight: bold;">即將完課 </span> -->
+				<!-- 						</div> -->
+				<!-- 						/.panel-heading -->
+				<!-- 						<div class="panel-body"> -->
+				<!-- 							<table width="100%" -->
+				<!-- 								class="table table-striped table-bordered table-hover" -->
+				<!-- 								id="dataTables-example2"> -->
+				<!-- 								<thead> -->
+				<!-- 									<tr> -->
+				<!-- 										<th>課程名稱</th> -->
+				<!-- 										<th>結束時間</th> -->
+				<!-- 									</tr> -->
+				<!-- 								</thead> -->
+				<!-- 								<tbody> -->
+				<!-- 									<c:forEach var="temp" items="${basiccourse}"> --!>
+				<!-- 										<c:if test="${temp[4] != '0' }"> --!>
+				<!-- 											<tr> -->
+				<!-- 												<td><a -->
+				<!-- 													href="ChartDataServlet?mode=2&course={{temp.3 }}" --!>
+				<!-- 													target="_blank">{{temp.4 }}</a></td> --!>
+				<!-- 												<td>${temp[6] }</td> --!>
+				<!-- 											</tr> -->
+				<!-- 										</c:if> --!>
+				<!-- 									</c:forEach> --!>
+				<!-- 								</tbody> -->
+				<!-- 								<c:if test="${readyendexist ==  false}"> --!>
+				<!-- 									<td>尚無課程</td> -->
+				<!-- 								</c:if> --!>
+				<!-- 							</table> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+
+				<!-- 				</div> -->
+				<!-- /.panel -->
+				<div class="col-lg-7">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<span style="font-weight: bold;">自學課程 ({{CoursefinalUpdate }}
+								updated)</span>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							{% if selfstudyexist %}
+								<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example3">
+
+									<thead>
+										<tr>
+											<th>開課中課程名稱</th>
+											<th>登入次數</th>
+											<th>最後登入</th>
+											<th>學習狀況</th>
+											<th>課程連結</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for temp in selfstudycourse %}
+											{% if temp.5 == '0' %}
+												<tr>
+													<td><a
+														href="ChartDataServlet?mode=2&course={{temp.3 }}"
+														target="_blank">{{temp.0 }}</a></td>
+													<td>{{temp.8 }}</td>
+													<td>{{temp.9 }}</td>
+													<td><a><font color="red"><span
+																style="font-weight: bold;">{{temp.11 }}</span></font></a></td>
+													<td><a
+														href="https://courses.openedu.tw/courses/{{temp.7}}/info"
+														target="_blank">學習去</a></td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+									</tbody>
+
+								</table>
+							{% else %}
+								<tr>
+									<div>尚無課程&nbsp;<a href="https://www.openedu.tw/list.jsp"
+											target="_blank">立即選課</a>
+									</div>
+								</tr>
+							{% endif %}
+						</div>
+						<!-- /.panel-body -->
+					</div>
+				</div>
+
+				<div class="col-lg-5">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<span style="font-weight: bold;">已完課 ({{CoursefinalUpdate }}
+								updated)</span>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							{% if endexist %}
+								<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example4">
+
+									<thead>
+										<tr>
+											<th>課程名稱</th>
+											<th>結束日期</th>
+											<th>取得證書</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for temp in basiccourse %}
+											{% if temp.5 != '0' %}
+												<tr>
+													<td><a
+														href="ChartDataServlet?mode=2&course={{temp.3 }}"
+														target="_blank">{{temp.5 }}</a></td>
+													<td>{{temp.6 }}</td>
+													<td>{{temp.10 }}</td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+									</tbody>
+
+								</table>
+							{% else %}
+								<div>尚無課程</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="Footer"
+			style="float: right; margin-bottom: 10px; margin-right: 10px;">
+			<font size=2>註冊平台時間：{{date_joined }}</font>
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+
+
+	<!-- jQuery -->
+	<script src="{% static './vendor/jquery/jquery.min.js' %}"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="{% static './vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="{% static './vendor/metisMenu/metisMenu.min.js' %}"></script>
+
+	<!-- DataTables JavaScript -->
+	<script src="{% static './vendor/datatables/js/jquery.dataTables.js' %}"></script>
+	<script src="{% static './vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+	<script src="{% static './vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+
+	<!-- Morris Charts JavaScript -->
+	<script src="{% static './vendor/raphael/raphael.min.js' %}"></script>
+	<script src="{% static './vendor/morrisjs/morris.min.js' %}"></script>
+	<script src="{% static './data/morris-data.js' %}"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="{% static './dist/js/sb-admin-2.js' %}"></script>
+
+
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example1').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example3').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example4').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example5').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+
+
+	<!-- 	<script type="text/javascript" -->
+	<!-- 		src="https://www.gstatic.com/charts/loader.js"></script> -->
+
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+</body>
+
+</html>
